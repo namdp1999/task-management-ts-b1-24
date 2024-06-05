@@ -146,3 +146,20 @@ export const edit = async (req: Request, res: Response): Promise<void> => {
     message: "Cập nhật công việc thành công!"
   });
 };
+
+// [PATCH] /api/v1/tasks/delete/:id
+export const deleteItem = async (req: Request, res: Response): Promise<void> => {
+  const id: string = req.params.id;
+
+  await Task.updateOne({
+    _id: id
+  }, {
+    deleted: true,
+    deletedAt: new Date()
+  });
+
+  res.json({
+    code: 200,
+    message: "Xóa công việc thành công!"
+  });
+};
