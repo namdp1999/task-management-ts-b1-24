@@ -5,7 +5,8 @@ import Task from "../models/task.model";
 export const index = async (req: Request, res: Response): Promise<void> => {
   interface Find {
     deleted: boolean,
-    status?: string
+    status?: string,
+    title?: RegExp
   }
 
   const find: Find = {
@@ -40,6 +41,13 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 
   const skip = (pagination.page - 1) * pagination.limit;
   // Hết Phân trang
+
+  // Tìm kiếm
+  if(req.query.keyword) {
+    const regex: RegExp = new RegExp(`${req.query.keyword}`, "i");
+    find["title"] = regex;
+  }
+  // Hết Tìm kiếm
 
   const tasks = await Task
     .find(find)
