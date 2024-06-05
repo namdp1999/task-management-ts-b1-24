@@ -16,7 +16,15 @@ export const index = async (req: Request, res: Response): Promise<void> => {
     find["status"] = `${req.query.status}`;
   }
 
-  const tasks = await Task.find(find);
+  // Sắp xếp
+  const sort: any = {};
+
+  if(req.query.sortKey && req.query.sortValue) {
+    sort[`${req.query.sortKey}`] = `${req.query.sortValue}`;
+  }
+  // Hết Sắp xếp
+
+  const tasks = await Task.find(find).sort(sort);
 
   res.json(tasks);
 }
