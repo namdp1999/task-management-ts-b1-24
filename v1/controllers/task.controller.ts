@@ -119,3 +119,15 @@ export const changeMulti = async (req: Request, res: Response): Promise<void> =>
     });
   }
 };
+
+// [POST] /api/v1/tasks/create
+export const create = async (req: Request, res: Response): Promise<void> => {
+  // req.body.createdBy = res.locals.user.id;
+  const task = new Task(req.body);
+  await task.save();
+
+  res.json({
+    code: 200,
+    message: "Tạo công việc thành công!"
+  });
+};
