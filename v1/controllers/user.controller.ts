@@ -71,3 +71,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     token: token
   });
 };
+
+// [GET] /api/v1/users/detail
+export const detail = async (req: Request, res: Response): Promise<void> => {
+  res.json({
+    code: 200,
+    message: "Thành công!",
+    user: res.locals.user
+  });
+}
